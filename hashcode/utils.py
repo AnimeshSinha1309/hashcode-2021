@@ -5,6 +5,18 @@ from hashcode.state import GameState
 problem_names = ['a', 'b', 'c', 'd', 'e', 'f']
 
 
+def bounds_on_scores(gs: GameState):
+    upper_bound_score = 0
+
+    for path in gs.car_paths:
+        time = 0
+        for street in path[1:]:
+            time += gs.streets[street].l
+        upper_bound_score += max(0, (gs.D - time) + gs.F)
+
+    print("Upper bound on score", upper_bound_score)
+
+
 def load(pid):
     file_path = f"problem/{problem_names[pid]}.txt"
 

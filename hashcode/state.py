@@ -16,7 +16,7 @@ class GameState:
 
         self.street_count = len(street_names)
 
-        self.intersection_count = defaultdict(lambda: [])
+        self.intersection_count = ic
 
         self.start_intersection_mapping = defaultdict(list)
         self.end_intersection_mapping = defaultdict(list)
