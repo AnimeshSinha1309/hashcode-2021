@@ -22,9 +22,9 @@ class GameState:
         for i in range(self.intersection_count):
             self.intersection_mapping[i] = []
 
-        for street in self.streets:
-            self.intersection_count[street.start].append(street.l)
-            self.intersection_count[street.end].append(street.l)
+        for idx, street in enumerate(self.streets):
+            self.intersection_count[street.start].append(idx)
+            self.intersection_count[street.end].append(idx)
 
         # list of lists where i-th list is indices of streets the i-th car goes for
         self.car_paths = car_paths
