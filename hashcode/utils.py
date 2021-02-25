@@ -1,8 +1,10 @@
-problem_names = ['a', 'b', 'c', 'd', 'e', 'f']
+from hashcode.state import GameState
+
+problem_names = ["a", "b", "c", "d", "e", "f"]
 
 
 def load(pid):
-    file_path = f"problem/{problem_names[pid]}"
+    file_path = f"problem/{problem_names[pid]}.txt"
 
     with open(file_path) as f:
         content = f.read().split("\n")
@@ -13,8 +15,8 @@ def load(pid):
         street_name_to_idx = {}
         car_paths = []
 
-        street_content = content[1:s + 1]
-        car_content = content[s + 1:s + c + 1]
+        street_content = content[1 : s + 1]
+        car_content = content[s + 1 : s + c + 1]
 
         for idx, line in enumerate(street_content):
             vals = line.split(" ")
@@ -24,9 +26,9 @@ def load(pid):
             street_name_to_idx[name] = idx
 
         for line in car_content:
-            streets = line.split(" ")[1:]
-            streets = [street_name_to_idx[x] for x in streets]
-            car_paths.append(streets)
+            car_streets = line.split(" ")[1:]
+            car_streets_idx = [street_name_to_idx[x] for x in car_streets]
+            car_paths.append(car_streets_idx)
 
     return GameState(streets, street_names, street_name_to_idx, car_paths, i, f, d)
 

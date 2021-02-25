@@ -1,6 +1,6 @@
 import numpy as np
 
-from collections import namedtuple
+from collections import namedtuple, defaultdict
 
 Street = namedtuple("Street", "start end l")
 
@@ -16,10 +16,10 @@ class GameState:
 
         self.street_count = len(street_names)
 
-        self.intersection_count = ic
+        self.intersection_count = defaultdict(lambda: [])
 
         self.intersection_mapping = {}
-        for i in range(self.intersection_count):
+        for i in range(ic):
             self.intersection_mapping[i] = []
 
         for idx, street in enumerate(self.streets):
