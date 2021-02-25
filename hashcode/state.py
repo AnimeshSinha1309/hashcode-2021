@@ -63,3 +63,8 @@ class Solver:
             schedules[intersection] = schedule
 
         return schedules
+
+    def dumdumsolver(self):
+        schedule = {}
+        for intersection, streets in self.state.end_intersection_mapping.items():
+            schedules[intersection]
