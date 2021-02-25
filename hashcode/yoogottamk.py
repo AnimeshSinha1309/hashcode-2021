@@ -1,4 +1,5 @@
 from collections import defaultdict
+from random import randint
 
 import numpy as np
 
@@ -13,7 +14,11 @@ def solve(pid):
 
     for car_path in gs.car_paths:
         t = 0
+        steps_left = len(car_path)
+        total_steps = steps_left
+
         for c in car_path:
+            steps_left -= 1
             street = gs.streets[c]
             intersection_times[street.end][c] += 1 - (t / gs.D)
             intersection_counts[street.end] += 1
@@ -30,7 +35,8 @@ def solve(pid):
         v = intersection_times[k]
         for _v in v.keys():
             v[_v] *= intersection_counts[k]
-            v[_v] = np.ceil(v[_v]).astype("int")
+            v[_v] = min(np.ceil(v[_v]).astype("int"), gs.D)
+            v[_v] = 1
 
         output[k] = list(v.items())
 
