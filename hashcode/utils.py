@@ -2,7 +2,7 @@ from typing import Dict
 
 from hashcode.state import GameState
 
-problem_names = ['a', 'b', 'c', 'd', 'e', 'f']
+problem_names = ["a", "b", "c", "d", "e", "f"]
 
 
 def bounds_on_scores(gs: GameState):
@@ -32,8 +32,8 @@ def load(pid):
         street_name_to_idx = {}
         car_paths = []
 
-        street_content = content[1: s + 1]
-        car_content = content[s + 1: s + c + 1]
+        street_content = content[1 : s + 1]
+        car_content = content[s + 1 : s + c + 1]
 
         for idx, line in enumerate(street_content):
             vals = line.split(" ")
