@@ -18,7 +18,10 @@ def bounds_on_scores(gs: GameState):
 
 
 def load(pid):
-    file_path = f"problem/{problem_names[pid]}.txt"
+    if type(pid) == str:
+        file_path = f"problem/{pid}.txt"
+    else:
+        file_path = f"problem/{problem_names[pid]}.txt"
 
     with open(file_path) as f:
         content = f.read().split("\n")
@@ -67,7 +70,8 @@ def save(pid, solution: Dict, street_names):
         open_count += 1
         write_solution.append([intersection, write_list])
 
-    with open(f"solution/{chr(pid + 97)}", "w") as f:
+    namesave = pid if type(pid) == str else chr(pid + 97)
+    with open(f"solution/{namesave}", "w") as f:
         f.write(f"{open_count}\n")
 
         for idx, write_list in write_solution:
