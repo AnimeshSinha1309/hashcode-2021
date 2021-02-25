@@ -18,11 +18,12 @@ class GameState:
 
         self.intersection_count = defaultdict(lambda: [])
 
-        self.intersection_mapping = defaultdict(list)
+        self.start_intersection_mapping = defaultdict(list)
+        self.end_intersection_mapping = defaultdict(list)
 
         for idx, street in enumerate(self.streets):
-            self.intersection_mapping[street.start].append(idx)
-            self.intersection_mapping[street.end].append(idx)
+            self.start_intersection_mapping[street.start].append(idx)
+            self.end_intersection_mapping[street.end].append(idx)
 
         # list of lists where i-th list is indices of streets the i-th car goes for
         self.car_paths = car_paths
@@ -34,7 +35,7 @@ class GameState:
         street_averages = np.zeros(self.street_count)
 
         for path in self.car_paths:
-            for s_idx in path:
+            for s_idx in path[1:]:
                 street_averages[s_idx] += 1
 
         return street_averages
@@ -46,12 +47,19 @@ class Solver:
 
     def weighted_solver(self):
         avg_flow = self.state.calculate_average_inflow()
-        schedules = []
+        schedules = {}
 
-        for intersection, streets in self.state.intersection_mapping.items():
+        for intersection, streets in self.state.end_intersection_mapping.items():
             weights = np.array([avg_flow[x] for x in streets])
-            weights = weights / np.sum(weights)
-            schedule = np.round(weights)
-            schedules.append(schedule)
+            if np.sum(weights) == 0:
+                continue
+
+            weights = np.round(weights / np.sum(weights))
+
+            if np.sum(weights) == 0:
+                continue
+
+            schedule = [[x, weights[s_i]] for s_i, x in enumerate(streets)]
+            schedules[intersection] = schedule
 
         return schedules

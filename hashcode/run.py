@@ -1,8 +1,8 @@
 from utils import load, save
 
-from state import GameState, Solver
+from state import Solver
 
-pid = 0
+pid = 4
 state = load(pid)
 solver = Solver(state)
 solution = solver.weighted_solver()
